@@ -54,6 +54,9 @@ flutter:
     - assets/icons/time.png
     - assets/icons/volume.png
     - assets/icons/no_devices.png
+    - assets/icons/home_nofill.png
+    - assets/icons/profile_nofill.png
+    - assets/icons/scene_nofill.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

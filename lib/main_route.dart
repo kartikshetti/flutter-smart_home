@@ -10,10 +10,27 @@ class MainRoute extends StatefulWidget{
 
 }
 
-class _MainRouteState extends State<MainRoute>{
+class _MainRouteState extends State<MainRoute> with SingleTickerProviderStateMixin{
+  //Tabcontroller for bottom navbar
+  //TabController controller;
+
   Device _currentDevice;
   final _devices = <Device>[];
   bool isDeviceListEmpty = true;
+
+
+  @override
+  void initState() {
+    super.initState();
+    //controller = TabController(length: 3,vsync: this);
+  }
+
+  @override
+  void dispose() {
+    //controller.dispose();
+    super.dispose();
+  }
+
 
 
   void _addDevices(Device device){
@@ -34,12 +51,7 @@ class _MainRouteState extends State<MainRoute>{
         Navigator.of(context).push(MaterialPageRoute<Null>(
           builder: (BuildContext context) {
             return Scaffold(
-              appBar: AppBar(
-                elevation: 1.0,
-                title: Text(
-                  "Add New Device",
-                ),
-              ),
+
               body: AddNewDeviceRoute(
 
               ),
@@ -108,7 +120,7 @@ class _MainRouteState extends State<MainRoute>{
           right: 8.0,
           bottom: 48.0
       ),
-      child: _buildDeviceWidgets(isDeviceListEmpty),
+        child:_buildDeviceWidgets(isDeviceListEmpty)
     );
 
     final appBar = AppBar(
@@ -121,10 +133,37 @@ class _MainRouteState extends State<MainRoute>{
         ),
       ),
     );
+    /**final tabBar =TabBarView(
+      // Add tabs as widgets
+      children: <Widget>[FirstTab(), SecondTab(), ThirdTab()],
+      // set the controller
+      controller: controller,
+    );**/
 
     return Scaffold(
       appBar: appBar,
       body: listView,
+
+      /**bottomNavigationBar:Material(
+        color: Colors.blue,
+        // set the tab bar as the child of bottom navigation bar
+        child: TabBar(
+          tabs: <Tab>[
+            Tab(
+              // set icon to the tab
+              icon: Icon(Icons.favorite),
+            ),
+            Tab(
+              icon: Icon(Icons.adb),
+            ),
+            Tab(
+              icon: Icon(Icons.airport_shuttle),
+            ),
+          ],
+          // setup the controller
+          controller: controller,
+        ),
+      ),**/
     );
   }
 
