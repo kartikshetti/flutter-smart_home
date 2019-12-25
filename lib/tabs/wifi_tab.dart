@@ -26,23 +26,19 @@ class Second extends StatelessWidget {
     'assets/icons/power.png',
     'assets/icons/currency.png',];
 
-  void _navigateToAddNewDevices(BuildContext context){
+  void _navigateToAddNewDevices(BuildContext context,Device device){
 
-    Navigator.of(context).push(MaterialPageRoute<Null>(
-      builder: (BuildContext context) {
-        return Scaffold(
+    Navigator.push(context,MaterialPageRoute(
+        builder: (context) => MainRoute(
+          device: device,
+        )),
+    );
+      }
 
-          body: MainRoute(
-
-          ),
-        );
-      },
-    ));
-  }
   void _onDeviceTap(Device device){
     print(device.name+" was tapped");
 
-   _navigateToAddNewDevices(Context);
+   _navigateToAddNewDevices(Context,device);
 
   }
 
@@ -59,8 +55,9 @@ class Second extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //Construct the device list for the first build only
-    if(_devices.length==0)
+    if(_devices.length==0){
           buildDevicesList();
+    }
     Context = context;
     var gridview =  GridView.count(
       crossAxisCount: 2,

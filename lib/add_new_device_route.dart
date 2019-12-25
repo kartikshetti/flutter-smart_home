@@ -126,7 +126,7 @@ class _AddNewDeviceRoute extends State<AddNewDeviceRoute> with SingleTickerProvi
           ),
           bottom: getTabBar(),
         ),
-      //Set tabbarView as body of scaffold
+      //Set TabBarView as body of scaffold
       body: getTabBarView(<Widget>[First(), Second()]));
       /**body: Container(
         // Sets the padding in the main container

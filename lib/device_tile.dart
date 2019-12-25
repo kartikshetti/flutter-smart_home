@@ -1,10 +1,11 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:smart_home/device.dart';
 
-const _rowHeight = 100.0;
-final _borderRadius = BorderRadius.circular(_rowHeight/2);
+//const _rowHeight = 100.0;
+//final _borderRadius = BorderRadius.circular(_rowHeight/2);
 
 class DeviceTile extends StatelessWidget {
   final Device device;
@@ -28,7 +29,31 @@ class DeviceTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return GestureDetector(
+        onTap: () => onTap(device),
+                child:Padding(
+                padding: EdgeInsets.only(left:8.0,right:8.0),
+                child:Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+
+              children: [
+                  Padding(
+                  padding: EdgeInsets.only(top:8.0, bottom:8.0),
+                  child: Image.asset(device.iconLocation,
+                  height:35),
+                ),
+                   Text(
+                      device.name,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 14
+                      ),
+                  )],
+            )
+
+    ));
+
+    /**return Material(
       color: Colors.transparent,
       child: Container(
         height: 300,
@@ -39,6 +64,7 @@ class DeviceTile extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.all(8.0),
             child: Row(
+
               children: [
                 Padding(
                   padding: EdgeInsets.all(8.0),
@@ -58,6 +84,6 @@ class DeviceTile extends StatelessWidget {
           ),
         ),
       ),
-    );
+    );**/
   }
 }

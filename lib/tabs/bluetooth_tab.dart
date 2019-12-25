@@ -4,7 +4,6 @@ import 'package:smart_home/device_tile.dart';
 import 'package:smart_home/main_route.dart';
 class First extends StatelessWidget {
   BuildContext Context;
-
   final _devices = <Device>[];
   static const _deviceNames = <String>[
     'Power Strip(WiFi)',
@@ -26,25 +25,18 @@ class First extends StatelessWidget {
     'assets/icons/power.png',
     'assets/icons/currency.png',];
 
-  void _navigateToAddNewDevices(BuildContext context){
+  void _navigateToAddNewDevices(BuildContext context,Device device){
 
-    Navigator.of(context).push(MaterialPageRoute<Null>(
-      builder: (BuildContext context) {
-        return Scaffold(
-
-          body: MainRoute(
-
-          ),
-        );
-      },
-    ));
+    Navigator.push(context,MaterialPageRoute(
+        builder: (context) => MainRoute(
+          device: device,
+        )),
+    );
   }
 
   void _onDeviceTap(Device device){
-    print(device.name+" was tapped");
-    _navigateToAddNewDevices(Context);
-
-  }
+    _navigateToAddNewDevices(Context,device);
+}
 
   void buildDevicesList() {
     for (var i = 0; i < _deviceNames.length; i++) {
@@ -55,11 +47,14 @@ class First extends StatelessWidget {
       ));
     }
   }
+
+
   @override
   Widget build(BuildContext context) {
     //Construct the device list for the first build only
-    if(_devices.length == 0)
-           buildDevicesList();
+    if(_devices.length == 0) {
+      buildDevicesList();
+    }
     Context = context;
     var gridview =  GridView.count(
       crossAxisCount: 2,
@@ -85,7 +80,7 @@ class First extends StatelessWidget {
         body: Container(
         // Sets the padding in the main container
         padding: const EdgeInsets.only(bottom: 2.0),
-    child: gridview,
+        child: gridview,
     ));
 
   }

@@ -1,52 +1,24 @@
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_home/device_info_route.dart';
 import 'device.dart';
 import 'device_tile.dart';
 import 'add_new_device_route.dart';
-class MainRoute extends StatefulWidget{
+class MainRoute extends StatelessWidget{
+    Device device;
+    BuildContext Context;
+   //Tabcontroller for bottom navbar
+   //TabController controller;
 
-  @override
-  _MainRouteState createState() => _MainRouteState();
-
-}
-
-class _MainRouteState extends State<MainRoute> with SingleTickerProviderStateMixin{
-  //Tabcontroller for bottom navbar
-  //TabController controller;
-
-  Device _currentDevice;
-  final _devices = <Device>[];
-  bool isDeviceListEmpty = true;
-
-
-  @override
-  void initState() {
-    super.initState();
-    //controller = TabController(length: 3,vsync: this);
-  }
-
-  @override
-  void dispose() {
-    //controller.dispose();
-    super.dispose();
-  }
+   Device _currentDevice;
+   static final _devices = <Device>[];
+   bool isDeviceListEmpty = true;
+   MainRoute({Key key,this.device}): super(key: key);
 
 
 
-  void _addDevices(Device device){
-    setState(() {
-      isDeviceListEmpty = false;
-      _devices.add(device);
-    });
-  }
-
-    void _onDeviceTap(Device device){
-        setState(() {
-          _currentDevice = device;
-        });
-    }
-
-    void _navigateToAddNewDevices(BuildContext context){
+/**void _navigateToAddNewDevices(BuildContext context){
 
         Navigator.of(context).push(MaterialPageRoute<Null>(
           builder: (BuildContext context) {
@@ -58,11 +30,26 @@ class _MainRouteState extends State<MainRoute> with SingleTickerProviderStateMix
             );
           },
         ));
-      }
+      }**/
+    void _onDeviceTap(Device device){
+      print(device.name+" was tapped");
+
+      Navigator.push(Context,MaterialPageRoute(
+        builder: (context) => DeviceInfoRoute(),
+        // Pass the arguments as part of the RouteSettings. The
+        // DetailScreen reads the arguments from these settings.
+        settings: RouteSettings(
+          arguments: device,
+        ),
+      ),
+      );
+
+    }
 
 
     Widget _buildDeviceWidgets(bool isDeviceListEmpty) {
       if (isDeviceListEmpty) {
+        print("came here");
         var column=
         Column(
           children: [Padding(
@@ -72,22 +59,22 @@ class _MainRouteState extends State<MainRoute> with SingleTickerProviderStateMix
               Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
-              'No connected devices, Please add a device'
-            )),
+              'No connected devices, Please click on '+' button to add a device'
+            ))]);
 
-      RaisedButton(
+      /**RaisedButton(
       child: Text('Add Device'),
-      onPressed: () => _navigateToAddNewDevices(context),
+      onPressed: () => _navigateToAddNewDevices(BuildContext context),
       textColor: Colors.white,
       color: Colors.blue,
       splashColor: Colors.blue[300],
       shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(16.0),
       side: BorderSide(color: Colors.blue)
-      ),
+      )
       padding: const EdgeInsets.all(8.0),
 
-      )]);
+      )]);**/
         return Center(
           child: Container(
               height: 240,
@@ -101,7 +88,7 @@ class _MainRouteState extends State<MainRoute> with SingleTickerProviderStateMix
       else {
         return GridView.count(
           crossAxisCount: 2,
-          childAspectRatio: 1,
+          childAspectRatio: 2,
           children: _devices.map((Device device) {
             return DeviceTile(
               device: device,
@@ -114,6 +101,14 @@ class _MainRouteState extends State<MainRoute> with SingleTickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
+  Context=context;
+  print("Inside build");
+    if(device!=null) {
+      print(device.name+"reached main route");
+      _devices.add(device);
+      isDeviceListEmpty=false;
+    }
+  print(_devices.length.toString()+"is the devices array len");
     final listView = Padding(
       padding: EdgeInsets.only(
           left: 8.0,
@@ -132,6 +127,24 @@ class _MainRouteState extends State<MainRoute> with SingleTickerProviderStateMix
           fontSize: 20.0,
         ),
       ),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () {
+            print('Clicked on + icon');
+            Navigator.of(context).push(MaterialPageRoute<Null>(
+              builder: (BuildContext context) {
+                return Scaffold(
+
+                  body: AddNewDeviceRoute(
+
+                  ),
+                );
+              },
+            ));
+          },
+        ),
+      ],
     );
     /**final tabBar =TabBarView(
       // Add tabs as widgets
@@ -143,6 +156,7 @@ class _MainRouteState extends State<MainRoute> with SingleTickerProviderStateMix
     return Scaffold(
       appBar: appBar,
       body: listView,
+
 
       /**bottomNavigationBar:Material(
         color: Colors.blue,
