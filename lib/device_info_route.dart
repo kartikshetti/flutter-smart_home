@@ -117,37 +117,41 @@ class _DeviceInfoRoute extends State<DeviceInfoRoute> with SingleTickerProviderS
               device.name
           ),
         ),
-        body: Center(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(24.0),
-                    child:  Image.asset(device.iconLocation,
-                    height: 125),
+        body: Container(
+        child: Center(
+        child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+        Padding(
+        padding: EdgeInsets.all(24.0),
+        child:  Image.asset(device.iconLocation,
+        height: 125),
 
-                  )
-                 ,
-                  Text(
-                      "Red LED"
-                  ), toggleSwitchRed,
-                  Text(
-                      "Green LED"
-                  ), toggleSwitchGreen,
-                  Text(
-                      "Blue LED"
-                  ), toggleSwitchBlue
-
-                ]
-            )
         )
-    );
+        ,
+        Text(
+        "Red LED"
+        ), toggleSwitchRed,
+        Text(
+        "Green LED"
+        ), toggleSwitchGreen,
+        Text(
+        "Blue LED"
+        ), toggleSwitchBlue
+
+        ]
+        )
+        ),
+
+        ));
+
   }
 
   @override
   void initState() {
     super.initState();
         getledstates();
+        print('Got led states');
 
 
     }

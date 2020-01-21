@@ -3,7 +3,18 @@ import 'main_route.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-
+  MaterialColor myPink = const MaterialColor(0xffe13e36,
+      const {
+        50  : const Color(0xffffffff),
+        100 : const Color(0xffffffff),
+        200 : const Color(0xffffffff),
+        300 : const Color(0xffffffff),
+        400 : const Color(0xffffffff),
+        500 : const Color(0xffffffff),
+        600 : const Color(0xfffffffff),
+        700 : const Color(0xfff98b6c),
+        800 : const Color(0xfffbb19d),
+        900 : const Color(0xfffdd8ce)});
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +24,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Raleway',
         textTheme: Theme.of(context).textTheme.apply(
-          bodyColor:Colors.grey[800] ,
-          displayColor: Colors.grey
+          bodyColor:Colors.black ,
+          displayColor: Colors.green
         ),
 
         // This is the theme of your application.
@@ -26,7 +37,7 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: myPink,
         textSelectionHandleColor: Colors.green[500],
       ),
       home: MainRoute(),

@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
@@ -10,6 +9,7 @@ import 'package:smart_home/device.dart';
 class DeviceTile extends StatelessWidget {
   final Device device;
   final ValueChanged<Device> onTap;
+  final ValueChanged<Device> onLongPress;
 
   /// The [CategoryTile] shows the name and color of a [Category] for unit
   /// conversions.
@@ -19,71 +19,34 @@ class DeviceTile extends StatelessWidget {
   /// We may want to pass in a null onTap when the Currency [Category]
   //    // is in a loading or error state. In build(), you'll want to update the UI
   //    // accordingly.
-  const DeviceTile({
-    Key key,
-    @required this.device,
-    this.onTap,
-  })
-      :assert(device != null),
+  const DeviceTile(
+      {Key key, @required this.device, this.onTap, this.onLongPress})
+      : assert(device != null),
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () => onTap(device),
-                child:Padding(
-                padding: EdgeInsets.only(left:8.0,right:8.0),
-                child:Column(
+    return Container(
+        padding: EdgeInsets.only(top: 16.0),
+        child: GestureDetector(
+            onTap: () => onTap(device),
+            onDoubleTap: () => onLongPress(device),
+            child: Container(
+                height: 100,
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
-
-              children: [
-                  Padding(
-                  padding: EdgeInsets.only(top:8.0, bottom:8.0),
-                  child: Image.asset(device.iconLocation,
-                  height:35),
-                ),
-                   Text(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                      child: Image.asset(device.iconLocation, height: 35),
+                    ),
+                    Text(
                       device.name,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 14
-                      ),
-                  )],
-            )
-
-    ));
-
-    /**return Material(
-      color: Colors.transparent,
-      child: Container(
-        height: 300,
-        child: InkWell(
-          borderRadius: _borderRadius,
-
-          onTap: () => onTap(device),
-          child: Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Row(
-
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Image.asset(device.iconLocation),
-                ),
-                Center(
-                  child: Text(
-                    device.name,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 15
+                      style: TextStyle(fontSize: 18),
                     )
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    );**/
+                  ],
+                ))));
   }
 }

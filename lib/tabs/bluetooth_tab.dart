@@ -3,6 +3,7 @@ import 'package:smart_home/device.dart';
 import 'package:smart_home/device_tile.dart';
 import 'package:smart_home/main_route.dart';
 class First extends StatelessWidget {
+  int bluetooth_device_id_no=1;
   BuildContext Context;
   final _devices = <Device>[];
   static const _deviceNames = <String>[
@@ -25,9 +26,10 @@ class First extends StatelessWidget {
     'assets/icons/power.png',
     'assets/icons/currency.png',];
 
+
   void _navigateToAddNewDevices(BuildContext context,Device device){
 
-    Navigator.push(context,MaterialPageRoute(
+    Navigator.pushReplacement(context,MaterialPageRoute(
         builder: (context) => MainRoute(
           device: device,
         )),
@@ -41,10 +43,12 @@ class First extends StatelessWidget {
   void buildDevicesList() {
     for (var i = 0; i < _deviceNames.length; i++) {
       _devices.add(Device(
+        id: bluetooth_device_id_no,
         name: _deviceNames[i],
         iconLocation: icons[i],
-        isDeviceRunning: false,
+        deviceStatus: 'false',
       ));
+      bluetooth_device_id_no +=1;
     }
   }
 
@@ -58,7 +62,7 @@ class First extends StatelessWidget {
     Context = context;
     var gridview =  GridView.count(
       crossAxisCount: 2,
-      childAspectRatio: 3,
+      childAspectRatio: 2,
       children: _devices.map((Device device) {
         return DeviceTile(
           device: device,
@@ -78,10 +82,9 @@ class First extends StatelessWidget {
 
     return Scaffold(
         body: Container(
-        // Sets the padding in the main container
         padding: const EdgeInsets.only(bottom: 2.0),
         child: gridview,
-    ));
+        ));
 
   }
 }

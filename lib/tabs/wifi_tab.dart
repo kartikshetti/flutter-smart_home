@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:smart_home/device.dart';
 import 'package:smart_home/device_tile.dart';
 import 'package:smart_home/main_route.dart';
+import 'package:smart_home/tabs/bluetooth_tab.dart';
 class Second extends StatelessWidget {
   BuildContext Context;
+  int wifi_device_id_no = 9;
 
   final _devices = <Device>[];
   static const _deviceNames = <String>[
@@ -28,7 +30,7 @@ class Second extends StatelessWidget {
 
   void _navigateToAddNewDevices(BuildContext context,Device device){
 
-    Navigator.push(context,MaterialPageRoute(
+    Navigator.pushReplacement(context,MaterialPageRoute(
         builder: (context) => MainRoute(
           device: device,
         )),
@@ -46,10 +48,12 @@ class Second extends StatelessWidget {
   void buildDevicesList() {
     for (var i = 0; i < _deviceNames.length; i++) {
       _devices.add(Device(
+        id: wifi_device_id_no,
         name: _deviceNames[i],
         iconLocation: icons[i],
-        isDeviceRunning: false,
+        deviceStatus: 'false',
       ));
+      wifi_device_id_no +=1;
     }
   }
   @override
@@ -61,7 +65,7 @@ class Second extends StatelessWidget {
     Context = context;
     var gridview =  GridView.count(
       crossAxisCount: 2,
-      childAspectRatio: 3,
+      childAspectRatio: 2,
       children: _devices.map((Device device) {
         return DeviceTile(
           device: device,
@@ -80,11 +84,10 @@ class Second extends StatelessWidget {
     );**/
 
     return Scaffold(
-        body: Container(
-          // Sets the padding in the main container
-          padding: const EdgeInsets.only(bottom: 2.0),
-          child: gridview,
-        ));
+        body:  Container(
+    padding: const EdgeInsets.only(bottom: 2.0),
+    child: gridview,
+    ));
 
   }
 }
