@@ -26,7 +26,7 @@ class DeviceTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    var container = Container(
         padding: EdgeInsets.only(top: 16.0),
         child: GestureDetector(
             onTap: () => onTap(device),
@@ -37,16 +37,22 @@ class DeviceTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Padding(
+                    new Container(
                       padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                      child: Image.asset(device.iconLocation, height: 35),
-                    ),
-                    Text(
+                      child: new Hero(
+                          tag: 'hero-tag${device.name}',
+                          child: Image.asset(device.iconLocation, height: 35)),
+                    ),Text(
                       device.name,
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(fontSize: 16,
+                      fontWeight: FontWeight.w400),
                     )
+
                   ],
                 ))));
+    print('Tag is'+'hero-tag${device.name}');
+return container;
   }
+
 }

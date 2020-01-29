@@ -1,6 +1,6 @@
 
 import 'package:firebase_database/firebase_database.dart';
-
+import 'package:flutter/scheduler.dart';
 import 'device.dart';
 import 'package:flutter/material.dart';
 
@@ -54,7 +54,6 @@ class _DeviceInfoRoute extends State<DeviceInfoRoute> with SingleTickerProviderS
     setState(() {
       if(redledstate=='ON')
         isSwitchedRed=true;
-      print('Green led state'+greenledstate);
       if(greenledstate=='ON')
         isSwitchedGreen=true;
 
@@ -68,6 +67,7 @@ class _DeviceInfoRoute extends State<DeviceInfoRoute> with SingleTickerProviderS
 
   @override
   Widget build(BuildContext context) {
+    timeDilation = 5.0;
     final Device device = ModalRoute
         .of(context)
         .settings
@@ -78,7 +78,7 @@ class _DeviceInfoRoute extends State<DeviceInfoRoute> with SingleTickerProviderS
         setState(() {
           isSwitchedRed = value;
           updateRed(value);
-          print("Red light " + isSwitchedRed.toString());
+          print("Red light on change called");
         });
       },
       activeTrackColor: Colors.redAccent,
@@ -91,7 +91,7 @@ class _DeviceInfoRoute extends State<DeviceInfoRoute> with SingleTickerProviderS
         setState(() {
           isSwitchedBlue = value;
           updateBlue(value);
-          print("Blue light " + isSwitchedBlue.toString());
+          print("Blue light on change called");
         });
       },
       activeTrackColor: Colors.lightBlueAccent,
@@ -104,11 +104,20 @@ class _DeviceInfoRoute extends State<DeviceInfoRoute> with SingleTickerProviderS
         setState(() {
           isSwitchedGreen = value;
           updateGreen(value);
-          print("Green light " + isSwitchedGreen.toString());
+          print("Green light on change called");
         });
       },
       activeTrackColor: Colors.lightGreenAccent,
       activeColor: Colors.green,
+    );
+
+    var centerImage = new Center(
+      child: new Container(
+        margin: EdgeInsets.only(top:100),
+        height: 100,
+        width: 100,
+        child: new Hero(tag: 'hero-tag${device.name}', child: Image.asset(device.iconLocation)),
+      ),
     );
     return Scaffold(
         appBar: AppBar(
@@ -117,33 +126,25 @@ class _DeviceInfoRoute extends State<DeviceInfoRoute> with SingleTickerProviderS
               device.name
           ),
         ),
-        body: Container(
-        child: Center(
-        child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-        Padding(
-        padding: EdgeInsets.all(24.0),
-        child:  Image.asset(device.iconLocation,
-        height: 125),
+        body: Column(
+          children: <Widget>[
+            centerImage,
+            Text(
+                "Red LED"
+            ), toggleSwitchRed,
+            Text(
+                "Green LED"
+            ), toggleSwitchGreen,
+            Text(
+                "Blue LED"
+            ), toggleSwitchBlue
 
+
+          ],
         )
-        ,
-        Text(
-        "Red LED"
-        ), toggleSwitchRed,
-        Text(
-        "Green LED"
-        ), toggleSwitchGreen,
-        Text(
-        "Blue LED"
-        ), toggleSwitchBlue
 
-        ]
-        )
-        ),
+        );
 
-        ));
 
   }
 
